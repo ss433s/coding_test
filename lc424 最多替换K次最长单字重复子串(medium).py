@@ -36,7 +36,7 @@ class Solution(object):
                         max_length = len(sub_chars)
         return max_length
 
-    # 递归
+    # 递归 以后再试 todo
     def solve2(self, chars, k):
 
         def get_max_count_char(chars):
@@ -67,7 +67,6 @@ class Solution(object):
             else:
                 char_length_dict[chars[right]] = 1
 
-
             while len(char_length_dict) + k < right-left:
                 left += 1
                 char_length_dict[chars[right]] -= 1
@@ -77,7 +76,7 @@ class Solution(object):
             char = chars[right]  # 当前字符
             this_k = k  # 本轮的K
             this_max_length = 1  # 本轮最大长度
-            for j in range(i+1, len(chars)):
+            for j in range(right+1, len(chars)):
                 if chars[j] == char:
                     this_max_length += 1
                 else:
@@ -88,10 +87,39 @@ class Solution(object):
 
         return max_length
 
+    # 滑动窗口 不每次更新max_char_count是否ok？
+    def solve3(self, chars, k):
+        max_length = 0
+        start = 0
+        char_dict = {}
+
+        def get_max_char(char_dict):
+            max_char = ''
+            max_char_count = 0
+            for char in char_dict:
+                if char_dict[char] > max_char_count:
+                    max_char = char
+                    max_char_count = char_dict[char]
+            return max_char, max_char_count
+
+        for end in range(len(chars)):
+            if chars[end] in char_dict:
+                char_dict[chars[end]] += 1
+            else:
+                char_dict[chars[end]] = 1
+            _, max_char_count = get_max_char(char_dict)
+            while end-start+1-max_char_count > k:
+                char_dict[chars[start]] -= 1
+                start += 1
+            # print(max_length, start, end)
+            max_length = max(max_length, end-start+1)
+
+        return max_length
+
 
 s = Solution()
-random_char_list = 'ababab'
+# random_char_list = 'ababab'
 k = 2
 print(random_char_list)
-result = s.solve(random_char_list, k)
+result = s.solve3(random_char_list, k)
 print(result)
