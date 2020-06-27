@@ -111,6 +111,8 @@ class Solution(object):
         return rst
 
     # 6. 快速排序
+    # 原来真的有不止一种partition方法
+    # 参考 https://blog.csdn.net/qq_37941471/article/details/80522354
     def quicksort(self, raw_list):
         tmp_list = [element for element in raw_list]
         length = len(raw_list)
@@ -119,15 +121,43 @@ class Solution(object):
         # low  --> 起始索引
         # high  --> 结束索引
         def partition(arr, low, high):
-            i = (low-1)         # 最小元素索引
+
+            # 快慢指针 从low开始
+            # pivot = low
+            # index = pivot + 1
+            # for i in range(index, high+1):
+            #     if arr[i] < arr[pivot]:
+            #         arr[i], arr[index] = arr[index], arr[i]
+            #         index += 1
+            # arr[index-1], arr[pivot] = arr[pivot], arr[index-1]
+            # return index - 1
+
+            # 快慢指针 从high开始
+            # i = (low-1)         # 最小元素索引
+            # pivot = arr[high]
+            # for j in range(low, high):
+            #     # 当前元素小于或等于 pivot
+            #     if arr[j] <= pivot:
+            #         i = i + 1
+            #         arr[i], arr[j] = arr[j], arr[i]
+            # arr[i+1], arr[high] = arr[high], arr[i+1]
+            # return (i+1)
+
+            # 左右指针式
+            left = low
+            right = high - 1
             pivot = arr[high]
-            for j in range(low, high):
-                # 当前元素小于或等于 pivot
-                if arr[j] <= pivot:
-                    i = i + 1
-                    arr[i], arr[j] = arr[j], arr[i]
-            arr[i+1], arr[high] = arr[high], arr[i+1]
-            return (i+1)
+            # if low - high == -1:
+            #     print('123')
+            while left < right:
+                if arr[left] <= pivot:
+                    left += 1
+                else:
+                    right -= 1
+                    arr[left], arr[right] = arr[right], arr[left]
+            if arr[left] > arr[high]:
+                arr[left], arr[high] = arr[high], arr[left]
+            return right
 
         # 快速排序函数
         def __quick_sort__(arr, low, high):
@@ -141,13 +171,14 @@ class Solution(object):
         return tmp_list
 
     # 7. 堆排序
-    # 二叉树遍历的问题，没看懂是什么遍历方式
+    # 参考资料 https://www.cnblogs.com/chengxiao/p/6129630.html
+    # 堆的第n层的第m个的序号是 2^(n-1)+m-2, 第i个元素的左右子节点分别是2i+1,2i+2
     def heapsort(self, raw_list):
         tmp_list = [element for element in raw_list]
         length = len(raw_list)
 
         def buildMaxHeap(arr, length):
-            for i in range(math.floor(length/2), 0, -1):
+            for i in range(math.floor(length/2))[::-1]:
                 heapify(arr, i, length)
             return
 
@@ -304,30 +335,30 @@ print()
 # print(result)
 # print()
 
-# print('---------Merge Sort (5,归并排序) -----------')
-# result = s.mergesort(random_number_list)
-# print(result)
-# print()
+print('---------Merge Sort (5,归并排序) -----------')
+result = s.mergesort(random_number_list)
+print(result)
+print()
 
-# print('---------Quick Sort (6,快速排序) -----------')
-# result = s.quicksort(random_number_list)
-# print(result)
-# print()
+print('---------Quick Sort (6,快速排序) -----------')
+result = s.quicksort(random_number_list)
+print(result)
+print()
 
 print('---------Quick Sort (7,堆排序) -----------')
 result = s.heapsort(random_number_list)
 print(result)
 print()
 
-print('---------Counting Sort (8,计数排序) -----------')
-result = s.countingsort(random_number_list)
-print(result)
-print()
+# print('---------Counting Sort (8,计数排序) -----------')
+# result = s.countingsort(random_number_list)
+# print(result)
+# print()
 
-print('---------Bucket Sort (9,桶排序) -----------')
-result = s.bucketsort(random_number_list)
-print(result)
-print()
+# print('---------Bucket Sort (9,桶排序) -----------')
+# result = s.bucketsort(random_number_list)
+# print(result)
+# print()
 
 print('---------Radix Sort (10,基数排序) -----------')
 result = s.radixsort(random_positive_int_list)
