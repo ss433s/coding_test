@@ -41,14 +41,14 @@ class Solution:
     # 遍历试试
     def hasPath2(self, matrix, rows, cols, path):
 
-        def check_next(self, matrix, rows, cols, cur_row, cur_col, pathIndex):
+        def check_next(matrix, rows, cols, cur_row, cur_col, pathIndex):
             this_match_sites = []
-            if path[pathIndex] == matrix[cur_row*cur_col + cur_col + 1]:
-                this_match_sites.append(cur_row*cur_col + cur_col + 1)
-            if path[pathIndex] == matrix[(cur_row+1)*cur_col + cur_col]:
-                this_match_sites.append((cur_row+1)*cur_col + cur_col)
-            if path[pathIndex] == matrix[(cur_row+1)*cur_col + cur_col + 1]:
-                this_match_sites.append((cur_row+1)*cur_col + cur_col + 1)
+            if path[pathIndex] == matrix[cur_row*cols + cur_col + 1]:
+                this_match_sites.append(cur_row*cols + cur_col + 1)
+            if path[pathIndex] == matrix[(cur_row+1)*cols + cur_col]:
+                this_match_sites.append((cur_row+1)*cols + cur_col)
+            if path[pathIndex] == matrix[(cur_row+1)*cols + cur_col + 1]:
+                this_match_sites.append((cur_row+1)*cols + cur_col + 1)
             return this_match_sites
 
         hasPath = False
@@ -56,17 +56,24 @@ class Solution:
         for i in range(len(matrix)):
             char = matrix[i]
             if char == path[0]:
-                cur_row = i // cols
-                cur_col = i - cur_row * cols
+                this_has_path = False
                 match_sites = [[i]]
-                #for index in range(1, len(path)-1):
+                for index in range(1, len(path)):
+                    this_match_sites = []
+                    for last_site in match_sites[index-1]:
+                        cur_row = last_site // cols
+                        cur_col = last_site - cur_row * cols
+                        this_match_sites += check_next(matrix, rows, cols, cur_row, cur_col, index)
+                    if this_match_sites == []:
+                        break
+                    else:
+                        match_sites.append(this_match_sites)
+                        if index == len(path)-1:
+                            this_has_path = True
+                if this_has_path:
+                    return this_has_path
 
-                return hasPath
-
-
-
-
-        return
+        return hasPath
 
 
 matrix = [
