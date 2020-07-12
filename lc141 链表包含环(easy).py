@@ -1,13 +1,6 @@
 # 参考资料 https://www.cnblogs.com/hiddenfox/p/3408931.html
 # 重点是要算出来a=c
-from common_file import random_char_list
-
-
-# Definition for singly-linked list.
-class ListNode(object):
-    def __init__(self, x):
-        self.val = x
-        self.next = None
+from common_file import random_char_list, ListNode
 
 
 class Solution(object):

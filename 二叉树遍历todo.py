@@ -1,12 +1,5 @@
 # 四种遍历方式 参考资料https://www.cnblogs.com/lliuye/p/9143676.html
-
-
-class TreeNode:
-    '''二叉搜索树节点的定义'''
-    def __init__(self, val):
-        self.val = val
-        self.left = None
-        self.right = None
+from common_file import TreeNode
 
 
 class OperationTree:

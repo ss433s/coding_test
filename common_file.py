@@ -9,3 +9,18 @@ for i in range(20):
     # random_float_list.append(a)
     a = random.randint(-100, 100)
     random_float_list.append(a/100)
+
+
+class TreeNode:
+    '''二叉搜索树节点的定义'''
+    def __init__(self, val):
+        self.val = val
+        self.left = None
+        self.right = None
+
+
+# Definition for singly-linked list.
+class ListNode(object):
+    def __init__(self, x):
+        self.val = x
+        self.next = None

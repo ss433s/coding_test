@@ -1,4 +1,5 @@
-from 二叉树遍历todo import TreeNode, OperationTree
+from common_file import TreeNode
+from 二叉树遍历todo import OperationTree
 
 
 class Solution:
